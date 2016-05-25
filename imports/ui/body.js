@@ -8,13 +8,37 @@ import './body.html';
 
 Template.body.helpers({
     charts(){
-        return Tasks.find({},{ sort:{createdAt: -1} });
+         chart = {
+     target: 'chart1',
+     type: 'BarChart',
+     columns: [
+       ['string', 'Topping'],
+       ['number', 'Slices']
+     ],
+     rows: [
+       ['Mushrooms', 3],
+       ['Onions', 1],
+       ['Olives', 1],
+       ['Zucchini', 1],
+       ['Pepperoni', 2]
+     ],
+     options: {
+       'title':'How Much Pizza I Ate Last Night',
+       'width':400,
+       'height':300
+     }
+   };
+    console.log("chart: "+chart)
+   drawChart(chart);
+
     },
 
     tasks() {
         return Tasks.find({},{ sort:{createdAt: -1} });
     },
 });
+
+
 
 
 Template.body.events({
@@ -95,3 +119,4 @@ function recurse(row,index,array) {
     return back;
 
 }
+
