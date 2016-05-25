@@ -1,9 +1,25 @@
 <template name="task">
-    <li class="{{#if checked}}checked{{/if}}">
+    <li class="{{#if checked}}checked{{/if}} class" id={{_id}} value="{{data}}"> 
         <button class="delete">&times;</button>
         <input type="checkbox" checked="{{checked}}" class="toggle-checked"/>
         <span class="text">{{text}}</span>
-        <span class="text">{{data}}</span>
-        <div id="chart_div_{{_id}}"></div>
+        <span class="text" >{{data}}</span>
+        <div id="{{_id}}"></div>
     </li>
+    <script type="text/javascript">
+   drawChart({
+             target: '{{_id}}',
+     type: 'BarChart',
+     columns: [
+       ['string', 'Topping'],
+       ['number', 'Slices']
+     ],
+     rows:"{{data}}".split(/#/).forEach(function (row){row.split(',')}),
+     options: {
+       'title':'How Much Pizza I Ate Last Night',
+       'width':400,
+       'height':300
+     }
+   });
+ </script>
 </template>

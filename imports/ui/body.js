@@ -87,7 +87,7 @@ Template.body.events({
                 // out.forEach(function (row){
                 //Object.keys(out).forEach(function (row){
                 for (row in out){
-                    data.push([row,row.length]);
+                    data.push([row,row.length,"#"]);
                 }
                 Tasks.update({_id: id},{$set: {data}});
                 console.log(data);
