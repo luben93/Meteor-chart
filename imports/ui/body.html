@@ -3,13 +3,20 @@
         <header>
             <h1>todolist</h1>
             <form class="new-task">
-                <input type="text" name="text" placeholder="feedme" />
-                </form>
+                
+                <input type="text" name="text" placeholder="feedme" class="inputter"/>
+                <script type="text/javascript" src="//api.filestackapi.com/filestack.js"></script>
+
+                <input type="filepicker" data-fp-apikey="AcNFb1GJR4OrrtrnzHIYgz"
+                                         name="file" onchange="alert(event.fpfile.url)">
+
+                <input class="btn" type="submit" value="Submit">
+            </form>
         </header>
 
         <ul>
             {{#each tasks}}
-                {{> task}}
+            {{> task}}
             {{/each}}
         </ul>
     </div> 
