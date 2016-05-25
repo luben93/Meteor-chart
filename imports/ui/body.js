@@ -1,15 +1,21 @@
 import { Template } from 'meteor/templating';
 import { Tasks } from '../api/tasks.js';
 import { HTTP } from 'meteor/http';
+//import Chart from 'chart:chart'
 import './task.js';
 import './body.html';
 
 
 Template.body.helpers({
+    charts(){
+        return Tasks.find({},{ sort:{createdAt: -1} });
+    },
+
     tasks() {
         return Tasks.find({},{ sort:{createdAt: -1} });
     },
 });
+
 
 Template.body.events({
     'submit .new-task'(event){
@@ -18,20 +24,74 @@ Template.body.events({
         const target = event.target;
         const text = target.text.value;
         let file = target.file.value;
-        HTTP.call("GET", file, {params:{}},function(err,result){
-            if(!err){
-                console.log("GETted");
-                result.toString.split('#').foreach(function(row){
-                    console.log("row: "+row)
-                })
-            }
-        });
+        if( file == "" ){
+            file="https://cdn.filestackcontent.com/0W6Ij5YTT3KNAINSfTAO";
+        }
+        console.log(file)
 
-
-        Tasks.insert({
+        let id = Tasks.insert({
             text,
             createdAt: new Date(),
             file,
         });
+        console.log(id);
+
+
+
+
+
+
+        let array= HTTP.call("GET", file,{},function(err,result){
+            if(err){
+                console.log(err);
+            }else{
+                //"abc".split("b");
+                let str=result.content;
+                //console.log("got: "+str);a
+                let out = {}
+                str.toString().split("#").forEach(function (row){
+                    const str = row.toString();
+                    const first=str.split(" ")[0];
+                    if(!out[first]){
+                        //console.log("empty")
+                        out[first]=[];
+                    }
+                    out[first].push(str);
+                });
+                console.log(out);
+                let data = [];
+                // out.forEach(function (row){
+                //Object.keys(out).forEach(function (row){
+                for (row in out){
+                    data.push([row,row.length]);
+                }
+                Tasks.update({_id: id},{$set: {data}});
+                console.log(data);
+            }
+        });
+
+
+
     },
 });
+
+// recursive function for counting ver{ with subrecords  } no time to implement, would look in to promise
+function recurse(row,index,array) {
+    console.log("row: "+row);
+    let i=index;
+    let tmp=row;
+
+    if(row.indexOf("\n{") > -1 && false){
+        let arr=[row];
+        while (array[i].indexOf("\n}") < -1 ){
+            i++;
+            arr.append(array[i]);
+        }
+        tmp = recurse(arr);
+    }
+    const name = tmp.toString().split(" ")[0];
+    const back= JSON.parse('{"'+name+'":"'+tmp+'"}');
+    console.log(back);
+    return back;
+
+}

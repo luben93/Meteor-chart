@@ -3,22 +3,46 @@
         <header>
             <h1>todolist</h1>
             <form class="new-task">
-                
+
                 <input type="text" name="text" placeholder="feedme" class="inputter"/>
                 <script type="text/javascript" src="//api.filestackapi.com/filestack.js"></script>
 
-                <input type="filepicker" data-fp-apikey="AcNFb1GJR4OrrtrnzHIYgz"
-                                         name="file" onchange="alert(event.fpfile.url)">
+                <input type="filepicker" data-fp-apikey="AcNFb1GJR4OrrtrnzHIYgz" name="file">
 
                 <input class="btn" type="submit" value="Submit">
             </form>
         </header>
+<!--canvas id="myChart" width="400" height="400"></canvas-->
 
+<div id="chart">{{createChart}}</div>
         <ul>
             {{#each tasks}}
             {{> task}}
             {{/each}}
         </ul>
     </div> 
+
 </body>
 
+<template name="chart">
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Topping');
+    data.addColumn('number', 'Slices');
+    rows={{data}};
+    out= []
+    for (row in rows){
+    out.push([row,rows[row]]);
+    }
+    console.log(out);
+    data.addRows(out);
+
+    // Set chart options
+    var options = {'title':'How Much Pizza I Ate Last Night',
+    'width':400,
+    'height':300};
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.PieChart(document.getElementById('chart_div_{{_id}}'));
+    chart.draw(data, options);
+
+</template>
