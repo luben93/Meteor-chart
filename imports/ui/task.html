@@ -1,9 +1,8 @@
 <template name="task">
-    <li class="{{#if checked}}checked{{/if}} data" id={{_id}} value="{{data}}"> 
+    <li class="{{#if checked}}checked{{/if}} data"  value="{{data}}"> 
         <button class="delete">&times;</button>
         <input type="checkbox" checked="{{checked}}" class="toggle-checked"/>
         <span class="text">{{text}}</span>
-        <span class="text" name="chartData">{{{data}}}</span>
         <div id="{{_id}}"></div>
     </li>
     <script type="text/javascript">

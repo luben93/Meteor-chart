@@ -45,7 +45,10 @@ Template.body.helpers({
 });
 
 
-
+Template.body.onCreated(function bodyOnCreated() {
+  //this.state = new ReactiveDict();
+  Meteor.subscribe('tasks');
+});
 
 Template.body.events({
     'submit .new-task'(event){
@@ -90,16 +93,24 @@ Template.body.events({
                 });
                 console.log(out);
                 let data = [];
+                let data2= [];
                 // out.forEach(function (row){
                 //Object.keys(out).forEach(function (row){
                 for (row in out){
                     row= row.replace('\n','');
                     row= row.replace('\r','');
                     data.push([row,row.length,"#"]);
+                    data2.push([row,row.length]);
                     //data[row]=row.length;
                 }
                 Tasks.update({_id: id},{$set: {data}});
                 console.log(data);
+
+                drawer(id,data2);
+                Meteor.publish('tasks',function(){
+                     drawer(id,data2);
+                })
+
             }
         });
 
