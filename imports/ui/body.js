@@ -32,9 +32,15 @@ Template.body.helpers({
    drawChart(chart);
 
     },
-
+    hello(text){console.log("hello"+text)},
     tasks() {
-        return Tasks.find({},{ sort:{createdAt: -1} });
+        tmp= Tasks.find({},{ sort:{createdAt: -1} });
+
+       // for (row in tmp){
+       //     drawer(tmp.id,tmp.data);
+       // }
+
+        return tmp;
     },
 });
 
@@ -87,7 +93,10 @@ Template.body.events({
                 // out.forEach(function (row){
                 //Object.keys(out).forEach(function (row){
                 for (row in out){
+                    row= row.replace('\n','');
+                    row= row.replace('\r','');
                     data.push([row,row.length,"#"]);
+                    //data[row]=row.length;
                 }
                 Tasks.update({_id: id},{$set: {data}});
                 console.log(data);

@@ -1,9 +1,27 @@
 <body>
 
+    <script type="text/javascript">
 
+function drawer(id,data){
+drawChart({
+             target: id,
+     type: 'BarChart',
+     columns: [
+       ['string', 'Topping'],
+       ['number', 'Slices']
+     ],
+     rows:data,
+     options: {
+       'title':'How Much Pizza I Ate Last Night',
+       'width':400,
+       'height':300
+     }
+   });
+} 
+</script>
     <div class="container">
         <header>
-            <h1>todolist</h1>
+            <h1>todolis  </h1>
             <form class="new-task">
 
                 <input type="text" name="text" placeholder="feedme" class="inputter"/>
@@ -14,7 +32,6 @@
                 <input class="btn" type="submit" value="Submit">
             </form>
         </header>
-        {{>chart}}
         <ul>
             {{#each tasks}}
             {{> task}}
@@ -23,11 +40,4 @@
     </div> 
 
 </body>
-
-<template name="chart">
-  <h2>Charts</h2>
-  <div id="chart1" width="100%"></div>
-  {{charts}}
-  <!--script type="text/javascript">charts()</script-->
-</template>
 

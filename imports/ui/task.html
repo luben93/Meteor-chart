@@ -1,25 +1,24 @@
 <template name="task">
-    <li class="{{#if checked}}checked{{/if}} class" id={{_id}} value="{{data}}"> 
+    <li class="{{#if checked}}checked{{/if}} data" id={{_id}} value="{{data}}"> 
         <button class="delete">&times;</button>
         <input type="checkbox" checked="{{checked}}" class="toggle-checked"/>
         <span class="text">{{text}}</span>
-        <span class="text" >{{data}}</span>
+        <span class="text" name="chartData">{{{data}}}</span>
         <div id="{{_id}}"></div>
     </li>
     <script type="text/javascript">
-   drawChart({
-             target: '{{_id}}',
-     type: 'BarChart',
-     columns: [
-       ['string', 'Topping'],
-       ['number', 'Slices']
-     ],
-     rows:"{{data}}".split(/#/).forEach(function (row){row.split(',')}),
-     options: {
-       'title':'How Much Pizza I Ate Last Night',
-       'width':400,
-       'height':300
-     }
-   });
- </script>
-</template>
+        out="{{data}}".split("#");
+        data2=[];
+        out.forEach(function (row){           
+        console.log(row);
+            row= row.replace('\n','');
+            row= row.substr(1,row.length-2);
+            tmp=row.split(',');
+            tmp[1]=parseInt(tmp[1]);
+            data2.push(tmp);
+        });
+console.log(out);
+console.log(data2);
+        drawer('{{_id}}',data2);
+    </script>
+   </template>
