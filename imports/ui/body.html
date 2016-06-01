@@ -5,7 +5,7 @@
 function drawer(id,data){
     drawChart({
         target: id,
-        type: 'BarChart',
+        type: 'PieChart',
         columns: [
             ['string', 'text'],
             ['number', 'number']
@@ -13,7 +13,7 @@ function drawer(id,data){
         rows:data,
         options: {
             'title':'data',
-            'width':500,
+            'width':700,
             'height':600
         }
     });
