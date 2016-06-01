@@ -1,7 +1,6 @@
 <template name="item">
     <li class="{{#if checked}}checked{{/if}} data"> 
         <button class="delete">&times;</button>
-        <span class="text">{{text}}</span>
         <div id="{{_id}}"></div>
     </li>
     <script type="text/javascript">
@@ -10,6 +9,6 @@
         for(i=0;i < out.length;i=i+2){//create a nested array for charts
             data2.push([out[i],parseInt(out[i+1])]);
         }
-        drawer('{{_id}}',data2);
+        drawer('{{_id}}',data2,'{{text}}');
     </script>
    </template>

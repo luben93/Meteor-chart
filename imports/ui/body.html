@@ -2,7 +2,7 @@
 
     <script type="text/javascript">
 //draws charts via google chart expect a div id and a nested array 
-function drawer(id,data){
+function drawer(id,data,name){
     drawChart({
         target: id,
         type: 'PieChart',
@@ -12,9 +12,9 @@ function drawer(id,data){
         ],
         rows:data,
         options: {
-            'title':'data',
+            'title':name,
             'width':700,
-            'height':600
+            'height':400
         }
     });
 
