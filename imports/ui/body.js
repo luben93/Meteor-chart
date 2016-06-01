@@ -1,43 +1,40 @@
 import { Template } from 'meteor/templating';
-import { Tasks } from '../api/tasks.js';
-import { Files } from '../api/files.js';
+import { Items } from '../api/items.js';
 import { HTTP } from 'meteor/http';
 //import Chart from 'chart:chart'
-import './task.js';
+import './item.js';
 import './body.html';
 
 
 Template.body.helpers({
-    tasks() {
-        return Tasks.find({},{ sort:{createdAt: -1} });
+    items() {
+        return Items.find({},{ sort:{createdAt: -1} });//list all se charts
     },
 });
 
 
-
 Template.body.events({
-    'submit .new-task'(event){
+    'submit .new-item'(event){// on submit of form, to upload new se files to parse
         event.preventDefault();
 
         const target = event.target;
         const text = target.text.value;
         let file = target.file.value;
-        if( file == "" ){
+        if( file == "" ){// if no file was uploaded use default
             file="https://cdn.filestackcontent.com/WnCefCcfQf29qyc3tYNg"
         }
 
-        let id = Tasks.insert({
+        let id = Items.insert({//save file url to DB
             text,
             createdAt: new Date(),
             file,
         });
 
+        //download file from "the cloud" and log errors or parse the file into nested arrays
         let array= HTTP.call("GET", file,{},function(err,result){
             if(err){
                 console.log(err);
             }else{
-
-
                 let out = {}
                 result.content.toString().split("#").forEach(function (row){
                     const str=row.toString();
@@ -49,29 +46,13 @@ Template.body.events({
                         out[col]=0;
                     }
                     out[col]++;
-                    console.log(out[col]);
                 });
                 let data=[];
                 for(row in out){
-
                     data.push([row,out[row]]);
                 }
-                console.log(data);
-                /*
-                let data = [];
-                let data2= [];
-                for (row in out){
-                    row= row.replace('\n','');
-                    row= row.replace('\r','');
-                    length = row.length + 1;
-                    data.push([row,length,"#"]);
-                    data2.push([row,length]);
-                    console.log(row);
-                }*/
-
-               Tasks.update({_id: id},{$set: {data}});
-               drawer(id,data);
-
+               Items.update({_id: id},{$set: {data}});//save parsed file to DB
+               drawer(id,data);//draw uploaded files when paresed
             }
         });
     },

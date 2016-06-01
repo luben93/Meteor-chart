@@ -1,28 +1,28 @@
 <body>
 
     <script type="text/javascript">
-
+//draws charts via google chart expect a div id and a nested array 
 function drawer(id,data){
-drawChart({
-             target: id,
-     type: 'BarChart',
-     columns: [
-       ['string', 'text'],
-       ['number', 'number']
-     ],
-     rows:data,
-     options: {
-       'title':'data',
-       'width':400,
-       'height':300
-     }
-   });
+    drawChart({
+        target: id,
+        type: 'BarChart',
+        columns: [
+            ['string', 'text'],
+            ['number', 'number']
+        ],
+        rows:data,
+        options: {
+            'title':'data',
+            'width':1200,
+            'height':600
+        }
+    });
 } 
-</script>
+    </script>
     <div class="container">
         <header>
             <h1>SIE  file analyzer</h1>
-            <form class="new-task">
+            <form class="new-item">
 
                 <input type="text" name="text" placeholder="feedme" class="inputter"/>
                 <script type="text/javascript" src="//api.filestackapi.com/filestack.js"></script>
@@ -33,8 +33,8 @@ drawChart({
             </form>
         </header>
         <ul>
-            {{#each tasks}}
-            {{> task}}
+            {{#each items}}
+            {{> item}}
             {{/each}}
         </ul>
     </div> 
