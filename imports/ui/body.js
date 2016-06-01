@@ -36,16 +36,28 @@ Template.body.events({
             if(err){
                 console.log(err);
             }else{
+
+
                 let out = {}
                 result.content.toString().split("#").forEach(function (row){
                     const str=row.toString();
                     const col = str.split(" ")[0];
-                    if(!out[col]){
-                        out[col]=Array();
+                    if(col ==""){
+                        return
                     }
-                    out[col].push(str);
-                    console.log(col)
+                    if(!out[col]){
+                        out[col]=0;
+                    }
+                    out[col]++;
+                    console.log(out[col]);
                 });
+                let data=[];
+                for(row in out){
+
+                    data.push([row,out[row]]);
+                }
+                console.log(data);
+                /*
                 let data = [];
                 let data2= [];
                 for (row in out){
@@ -54,11 +66,11 @@ Template.body.events({
                     length = row.length + 1;
                     data.push([row,length,"#"]);
                     data2.push([row,length]);
-                    //console.log(row);
-                }
-                Tasks.update({_id: id},{$set: {data}});
+                    console.log(row);
+                }*/
 
-                drawer(id,data2);
+               Tasks.update({_id: id},{$set: {data}});
+               drawer(id,data);
 
             }
         });

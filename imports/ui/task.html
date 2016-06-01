@@ -1,23 +1,20 @@
 <template name="task">
     <li class="{{#if checked}}checked{{/if}} data"  value="{{data}}"> 
         <button class="delete">&times;</button>
-        <input type="checkbox" checked="{{checked}}" class="toggle-checked"/>
+        <!--input type="checkbox" checked="{{checked}}" class="toggle-checked"/-->
         <span class="text">{{text}}</span>
         <div id="{{_id}}"></div>
     </li>
     <script type="text/javascript">
         out="{{data}}".split("#");
         data2=[];
-        out.forEach(function (row){           
-        console.log(row);
+        out.forEach(function (row){
             row= row.replace('\n','');
             row= row.substr(1,row.length-2);
             tmp=row.split(',');
             tmp[1]=parseInt(tmp[1]);
             data2.push(tmp);
         });
-console.log(out);
-console.log(data2);
         drawer('{{_id}}',data2);
     </script>
    </template>
