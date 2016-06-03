@@ -7,4 +7,4 @@
 1. install gagarin via `npm install -g gagarin` 
 2. have a webdriver running (i.e [chrome webdriver](http://chromedriver.storage.googleapis.com/index.html))
 3. run `meteor` from project root
-3. run `gagarin --verbose` from project root in a new shell
+3. run `gagarin --verbose` from project root in another shell
